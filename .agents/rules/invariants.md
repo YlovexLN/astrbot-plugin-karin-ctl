@@ -6,8 +6,9 @@
 
 ## I1. 只依赖 `aiohttp` 与标准库
 
-`requirements.txt` 只有 `aiohttp>=3.9`。AstrBot 装插件只是把目录放进 `data/plugins/`，不会替你 `pip install`，
-新依赖 = 用户机器上 `ImportError`，而错误发生在加载阶段，表现为「插件在面板里是灰色的」。
+`requirements.txt` 只有 `aiohttp>=3.9`（AstrBot 自带，这里只是把下限写清楚）。AstrBot 加载插件时会按
+`requirements.txt` 安装依赖（`star_manager.py` 的 `_install_requirements_with_precheck`），多一个依赖就多一次
+安装失败或版本冲突的机会；错误发生在加载阶段，表现为「插件在面板里是灰色的」。
 
 **验证**：`cat requirements.txt`；`grep -n '^import \|^from ' main.py` 只出现
 `asyncio` / `json` / `re` / `pathlib` / `urllib.parse` / `aiohttp` / `astrbot.api`。

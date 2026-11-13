@@ -25,7 +25,7 @@ Karin 侧 `/api/v1/astrbot/<action>` 的 HTTP 请求。真正的逻辑在姊妹�
 
 ## 硬约束
 
-1. **不新增第三方依赖**——只用 `aiohttp` 与标准库。AstrBot 装插件时不会替你跑 `pip install`。
+1. **不新增第三方依赖**——只用 `aiohttp`（AstrBot 自带）与标准库。AstrBot 加载插件会按 `requirements.txt` 装依赖（`star_manager.py` 的 `_install_requirements_with_precheck`），多一个依赖就多一次安装失败/版本冲突的机会，而失败会表现为「插件在面板里是灰色的」。
 2. **工具 docstring 是给模型看的 prompt**，不是注释。改描述等于改行为。
 3. **每个工具先判 `self._enabled`**，关掉时返回一句话就退出，不能悄悄不打请求。
 4. **返回给模型的文本都要 `_clip`**——进上下文的东西按 token 反复计费。
