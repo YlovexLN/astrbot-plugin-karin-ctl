@@ -1,0 +1,7 @@
+name: astrbot_plugin_karin_ctl
+display_name: Karin 联动
+desc: 让 AstrBot 看见并调用 Karin 的插件（插件清单 / 指令检索 / 直接调用 / 分享链接解析 / 日志）
+short_desc: 连通 Karin，直接查插件、搜指令、调插件
+version: 0.0.1
+author: YlovexLN
+repo: https://github.com/YlovexLN/astrbot-plugin-karin-ctl

@@ -1,0 +1,37 @@
+{
+  "_note": {
+    "type": "text",
+    "description": "工具由模型按需调用；也可在 AstrBot 插件管理里直接禁用本插件以完全关闭",
+    "default": "工具只在你自己主动询问 Karin 相关事情时才会被调用，AstrBot 不会自动轮询 Karin。填好下面两项后，对 AstrBot 说一句 Karin 相关的命令即可验证。"
+  },
+  "karin_url": {
+    "type": "string",
+    "description": "Karin 的 HTTP 地址，例如 http://192.0.2.10:7777（是 Karin 的 HTTP_PORT，不是 WebUI 端口）",
+    "default": "http://127.0.0.1:7777"
+  },
+  "karin_token": {
+    "type": "string",
+    "description": "karin-plugin-astrbot-bridge 里配置的 token（与 Karin .env 的 ASTRBOT_BRIDGE_TOKEN 一致）",
+    "default": ""
+  },
+  "timeout": {
+    "type": "int",
+    "description": "请求 Karin 的超时秒数。kkk 出卡片要 10~14 秒，别设得太小（自动补卡片已改后台执行，不再堵正文）",
+    "default": 60
+  },
+  "enabled": {
+    "type": "bool",
+    "description": "总开关。关闭后 7 个工具立即返回关闭提示，不会再打到 Karin",
+    "default": true
+  },
+  "auto_share": {
+    "type": "bool",
+    "description": "自动补卡片：模型在回复末尾写 [[share:<链接>]] 时，把这条链接交给 Karin 的解析插件（kkk），由它在你当前会话补一张卡片。标记本身不会发给用户。关掉后链接会原样留在正文里、不出卡片",
+    "default": true
+  },
+  "prompt_hint": {
+    "type": "bool",
+    "description": "格式兜底：消息像是在要视频时，往系统提示里加一句「链接单独一行写 [[share:<链接>]]」。没装 fixed-reply-format 这类 skill 也能出卡片。普通闲聊不注入，不额外花 token",
+    "default": true
+  }
+}
