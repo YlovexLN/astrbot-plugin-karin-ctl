@@ -1,6 +1,10 @@
-# astrbot-plugin-karin-ctl
+![astrbot-plugin-karin-ctl](https://socialify.git.ci/YlovexLN/astrbot-plugin-karin-ctl/image?language=1&owner=1&name=1&theme=Light)
 
 让 AstrBot 的 Agent 看见并调用 Karin 的插件。
+
+[![version](https://img.shields.io/badge/version-0.0.1-blue.svg?style=flat-square)](./metadata.yaml)
+[![license](https://img.shields.io/badge/license-AGPL--3.0-blue.svg?style=flat-square)](./LICENSE)
+[![python](https://img.shields.io/badge/python-3.10%2B-3776AB.svg?style=flat-square)](https://www.python.org)
 
 配套 Karin 侧插件：**karin-plugin-astrbot-bridge**（提供 `/api/v1/astrbot/*`）。两个插件必须一起装。
 
@@ -114,6 +118,17 @@ skill 存在时两处说法一致，不冲突；有标记时只发标记那一�
 - `karin_share` 支持 **B站 与抖音**，其它平台在 bridge 侧被白名单挡下；依赖 `karin-plugin-kkk` 已装且启用。
   它拿不到卡片内容，也不做链接存在性校验（不额外抓标题），失败只能从 `karin_logs` 里看出来。
 
+## 排障
+
+| 症状 | 先看哪里 |
+| --- | --- |
+| 模型根本不调工具 | 插件是否启用、面板里是不是灰色；日志有没有 `[karin_ctl] 已加载` 那一行 |
+| 工具报「连不上」 | `karin_url` 的端口是不是 Karin 的 `HTTP_PORT`（不是 WebUI 端口）；跨容器别用 `127.0.0.1` |
+| 工具报 401 / 500 | 两边 token 是否一致；Karin 侧 bridge 有没有拿到 `HTTP_AUTH_KEY` |
+| 正文里有链接却没卡片 | 当前会话是不是 `webchat`/`console`（调试窗口不补卡）；`auto_share` 是否被关 |
+| 卡片迟迟不来 | `karin_logs` 搜 `kkk`；桥不会自己造错误卡，失败只在 `share` 的 `ok:false` 与日志里 |
+| 卡片发错会话 | 投递对象是「消息所在的会话」；跨平台（Telegram 等）要显式给 `scene` + QQ 号 |
+
 ## 仓库结构
 
 | 路径 | 说明 |
@@ -124,6 +139,7 @@ skill 存在时两处说法一致，不冲突；有标记时只发标记那一�
 | `requirements.txt` | 第三方依赖，只有 `aiohttp` |
 | `README.md` / `INSTALL.md` | 使用与安装说明 |
 | `scripts/pack.mjs` | 本地打包脚本（不进插件包） |
+| `dist/` | 打包产物（zip + 解压副本），已被 `.gitignore` 忽略 |
 | `AGENTS.md` / `.agents/` | 维护者文档（不进插件包） |
 
 ## 许可证

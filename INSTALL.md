@@ -25,7 +25,7 @@
 
 ## 配套的 Karin 侧
 
-另一个仓库 `karin-plugin-astrbot-bridge`（`dist/karin-plugin-astrbot-bridge-v0.0.1.zip`）负责提供
+另一个仓库 `karin-plugin-astrbot-bridge`（`dist/karin-plugin-astrbot-bridge-v0.0.2-beta.1.zip`）负责提供
 `/api/v1/astrbot/*` 接口。两个包必须一起装，token 两边填一致。
 
 ## 重新打包
