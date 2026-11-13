@@ -21,7 +21,7 @@ Karin 侧 `/api/v1/astrbot/<action>` 的 HTTP 请求。真正的逻辑在姊妹�
 | `metadata.yaml` | 插件元数据（版本 `0.0.1`）：市场与更新只认它；改版本时同步 `pack.mjs` 的 `ZIP_NAME` 和 README/INSTALL 里的包名 |
 | `requirements.txt` | 只有 `aiohttp` |
 | `README.md` | 面向使用者的安装与用法 |
-| `.agents/` | `rules/` 约束 · `memory/` 背景与决策 · `workflows/` 流程 · `skills/` 排障 · `commands/` 命令 |
+| `.agents/` | `rules/` 约束 · `memory/` 背景与决策 · `workflows/` 流程 · `skills/` 排障与说话方式 · `commands/` 命令 |
 
 ## 硬约束
 
