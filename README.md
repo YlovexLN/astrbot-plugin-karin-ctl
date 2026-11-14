@@ -83,6 +83,12 @@
 
 排障见 [`.agents/skills/troubleshooting.md`](./.agents/skills/troubleshooting.md)。
 
+## 致谢
+
+- 代码与文档由 **DeepSeekRuntime** 配合 **DeepSeek-V4.1-Flash** 模型编写；需求、部署与实测由作者完成。
+- 指令表、日志与卡片能力由姊妹仓库 [karin-plugin-astrbot-bridge](https://github.com/YlovexLN/karin-plugin-astrbot-bridge) 提供，本插件只做翻译。
+- 视频卡片依赖 [karin-plugin-kkk](https://github.com/ikenxuan/karin-plugin-kkk)；工具与配置的边界参照 [AstrBot](https://github.com/AstrBotDevs/AstrBot) 的插件接口。
+
 ## 许可证
 
 [AGPL-3.0-only](./LICENSE)。插件能通过 Karin 驱动聊天账号，修改后分发请同样以 AGPL 开源。

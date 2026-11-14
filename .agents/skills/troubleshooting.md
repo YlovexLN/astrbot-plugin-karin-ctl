@@ -14,6 +14,7 @@
 | `karin_call` 超时 | 插件里做了慢网络请求；调大 `timeout` |
 | 回复里露出 `[[share:...]]` | 标记没被剥掉——`auto_share` 关了，或这条不是 `is_llm_result()` |
 | 卡片没出、正文有链接 | 平台是 `webchat`/`console`（故意跳过），或链接不是 B站/抖音，或 `karin_logs` 里 kkk 报错 |
+| 卡片没出，`karin_call`/日志里有 `reading 'video'` | kkk 的 B站视频解析已知崩溃，**不是本插件的问题**，见下「kkk 的视频解析会崩」 |
 | 卡片比正文先到 | 旧版本才会；现在解析在后台，正文先发 |
 | 对话越聊越贵 | `karin_call` 拉了大段文本；改用 `deliver=True` |
 
@@ -32,6 +33,16 @@ bridge 取令牌的顺序是 `HTTP_AUTH_KEY` → `ASTRBOT_BRIDGE_TOKEN` → 插�
 3. **Karin 日志**有没有 `[astrbot-bridge] action=share`。没有 → 链接没被识别（不是 B站/抖音，或 `_normalize_link` 判成无效）。
 4. 有 `action=share` 但没卡片 → kkk 的问题（apiKey / puppeteer），看 `karin_logs`。
 5. 卡片出现在别的会话 → 看 `_resolve_scene`：非 QQ 平台的 ID 在 Karin 侧不存在，要显式传 `scene`+`target`。
+
+## kkk 的视频解析会崩（已知，非本插件问题）
+
+现象：让 kkk 出 B站视频卡片时，卡片不出，Karin 日志里 kkk 抛 `Cannot read properties of undefined (reading 'video')`。
+
+成因在 kkk 自己：`bilibili.videoQuality > 64` 且有登录态时走 `dash` 分支，直接读 `playUrlData.data.data.dash.video`，那行没有可选链；B站 playurl 对部分账号只回 `durl` 形状。
+
+**只要走 kkk 的 B站视频解析就会触发，与本插件、与谁调用、调哪条指令都无关。** 本插件已经不再自己解析视频，只把链接交给 kkk；绕不开——出卡片本身就靠 kkk 拉流渲染。所以要如实回报失败、让用户看 karin_logs，不改 `videoQuality`、不碰 Karin 的 node_modules。真要绕开只能用户自己降 `videoQuality` 到 64 以下或给 kkk 提 issue。
+
+另一条相关线索：kkk 的 cookie 过期（Karin 日志 `[B站登录] 会话结束于失败态: kind=auth code=COOKIE_EXPIRED`）会改变「有没有登录态」，同一个配置在不同时间的表现可能不一样。
 
 **别在 webchat 里验证卡片**：面板调试窗口被 `NO_CARD_PLATFORMS` 跳过，否则调试时贴的测试链接会把卡片发到真实 QQ。
 
